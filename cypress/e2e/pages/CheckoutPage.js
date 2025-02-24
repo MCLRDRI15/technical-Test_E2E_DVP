@@ -1,6 +1,6 @@
 export default class CheckoutPage {
     constructor() {
-        this.checkoutButton = "a[href*='checkout']";
+        this.checkoutButton = "a[href*='https://opencart.abstracta.us:443/index.php?route=checkout/checkout']";
         this.firstNameInput = "#input-payment-firstname";
         this.lastNameInput = "#input-payment-lastname";
         this.addressInput = "#input-payment-address-1";

@@ -6,7 +6,7 @@
   "scripts": {
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
-    "cypress:run:chrome": "cypress open --browser chrome",
+    "cypress:run:chrome": "cypress run --browser chrome",
     "cypress:run:firefox": "cypress run --browser firefox",
     "cypress:run:tag:register": "cypress run --env grep=@TC_001",
     "cypress:run:tag:regression": "cypress run --env grep=@regression"

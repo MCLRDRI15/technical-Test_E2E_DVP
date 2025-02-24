@@ -1,5 +1,6 @@
 export default class RegisterPage {
     constructor() {
+        this.form = ".form-horizontal"
         this.firstNameInput = "#input-firstname";
         this.lastNameInput = "#input-lastname";
         this.emailInput = "#input-email";
@@ -13,15 +14,16 @@ export default class RegisterPage {
         cy.visit("https://opencart.abstracta.us/index.php?route=account/register");
     }
     fillRegistrationForm(firstName, lastName, email, telephone, password) {
+        cy.get(this.agreeCheckbox).check();
         cy.get(this.firstNameInput).type(firstName);
         cy.get(this.lastNameInput).type(lastName);
         cy.get(this.emailInput).type(email);
         cy.get(this.telephone).type(telephone);
         cy.get(this.passwordInput).type(password);
-        cy.get(this.confirmPasswordInput).type(password);
-        cy.get(this.agreeCheckbox).check();
+        cy.get(this.confirmPasswordInput).type(password).type('{enter}');
     }
     submitForm() {
         cy.get(this.continueButton).click();
+        cy.get(this.form).submit();
     }
 }

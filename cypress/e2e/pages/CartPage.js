@@ -4,6 +4,7 @@ export default class CartPage {
         this.cartUpdateButton = "button[data-original-title='Update']";
     }
     addProductToCart(productName) {
+        cy.visit("https://opencart.abstracta.us/index.php?route=product/category&path=18");
         cy.contains(productName).click();
         cy.get("button[onclick*='cart.add']").click();
     }

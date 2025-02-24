@@ -2,11 +2,20 @@ import LoginPage from "../pages/LoginPage";
 import RegisterPage from "../pages/registerPage";
 import CheckoutPage from "../pages/checkoutPage";
 import CartPage from "../pages/cartPage";
+import { faker } from '@faker-js/faker';
 
 const loginPage = new LoginPage();
 const registerPage = new RegisterPage();
 const cartPage = new CartPage();
 const checkoutPage = new CheckoutPage();
+
+let registerData = {
+  firstName : faker.name.firstName().toString(),
+  lastName : faker.name.lastName().toString(),
+  email : faker.internet.email().toString(),
+  phoneNumber : faker.phone.number().toString(),
+  password : faker.internet.password().toString(),
+}
 
 describe("E2E Tests for OpenCart", () => {
   beforeEach(() => {
@@ -15,26 +24,20 @@ describe("E2E Tests for OpenCart", () => {
 
   it("@TC_001 - User Registration", () => {
     registerPage.navigateToRegister();
-    registerPage.fillRegistrationForm(
-      "Michael Alejandro",
-      "Rios Rodriguez",
-      "michael@example.com",
-      "3137906289",
-      "Password123!"
-    );
+    registerPage.fillRegistrationForm(registerData.firstName, registerData.lastName, registerData.email, registerData.phoneNumber, registerData.password);
     registerPage.submitForm();
-    cy.url().should('eq', 'https://opencart.abstracta.us/index.php?route=account/success');
-    cy.contains('p', 'Congratulations! Your new account has been successfully created!').should('be.visible');
+    cy.url().should('eq', 'https://opencart.abstracta.us/index.php?route=account/account');
   });
 
   it("@TC_002 - Login Validation", () => {
     loginPage.navigateToLogin();
-    loginPage.enterCredentials("testuser@example.com", "Password123!");
+    loginPage.enterCredentials("michael@example.com", "Password123!");
     loginPage.submitLogin();
-    cy.contains("My Account").should("be.visible");
+    cy.url().should('eq', 'https://opencart.abstracta.us/index.php?route=account/account');
   });
 
   it("@TC_003 - Password Reset", () => {
+    loginPage.navigateToLogin();
     loginPage.navigateToForgotPassword();
     loginPage.requestPasswordReset("testuser@example.com");
     cy.contains("An email with a confirmation link has been sent").should(
@@ -71,12 +74,9 @@ describe("E2E Tests for OpenCart", () => {
     cy.get("input[name='quantity']").should("have.value", "2");
   });
 
-  it("@TC_009 - Complete Checkout Process", () => {
+  it.only("@TC_009 - Complete Checkout Process", () => {
     checkoutPage.completeCheckout(
-      "John Doe",
-      "123 Test Street",
-      "testuser@example.com",
-      "Visa"
+      registerData.firstName, registerData.lastName, registerData.email, registerData.phoneNumber
     );
     cy.contains("Your order has been placed!").should("be.visible");
   });

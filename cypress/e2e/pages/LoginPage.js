@@ -3,7 +3,7 @@ export default class LoginPage {
         this.emailInput = "#input-email";
         this.passwordInput = "#input-password";
         this.loginButton = "input[value='Login']";
-        this.forgotPasswordLink = "a[href*='forgotten']";
+        this.forgotPasswordLink = "a[href*='https://opencart.abstracta.us:443/index.php?route=account/forgotten']";
     }
     navigateToLogin() {
         cy.visit("https://opencart.abstracta.us/index.php?route=account/login");
@@ -16,7 +16,7 @@ export default class LoginPage {
         cy.get(this.loginButton).click();
     }
     navigateToForgotPassword() {
-        cy.get(this.forgotPasswordLink).click();
+        cy.get(this.forgotPasswordLink).first().click();
     }
     requestPasswordReset(email) {
         cy.get(this.emailInput).type(email);
